@@ -1,16 +1,16 @@
 # Data Analysis Skills
 
-데이터 분석 에이전트용 스킬 묶음. 사용 순서는 [AGENTS.md](AGENTS.md)에 있다.
+데이터 분석 에이전트용 스킬 묶음. 작업 절차와 파일 구조는 [guide.md](guide.md), 스킬 사용 순서는 [AGENTS.md](AGENTS.md)에 있다.
 
 ## 설치
 
-Codex: `skills/` 아래 폴더를 프로젝트의 `.agents/skills/`에 폴더째 복사하고, `AGENTS.md`를 프로젝트 루트에 둔다.
+Codex: `skills/` 아래 폴더를 프로젝트의 `.agents/skills/`에 폴더째 복사하고, `AGENTS.md`와 `guide.md`를 프로젝트 루트에 둔다.
 
 ## 구성과 출처
 
 | 스킬 | 역할 | 출처 | 라이선스 |
 |---|---|---|---|
-| analysis-checklist | 분석 전 기준·점검표 작성 | 이 저장소 (직접 작성) | — |
+| analysis-checklist | 분석 전 요구사항(R#)·계획 작성 (`docs/00`, `docs/01`) | 이 저장소 (직접 작성) | — |
 | explore-data | 데이터 프로파일링 | [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/2574e29377c7173d0cecffef29a6ecbd7f8ccb5d/data/skills/explore-data) `data/skills/explore-data` | Apache-2.0 |
 | statistical-analysis | 기술통계·이상치·가설검정 | [anthropics/knowledge-work-plugins](https://github.com/anthropics/knowledge-work-plugins/tree/2574e29377c7173d0cecffef29a6ecbd7f8ccb5d/data/skills/statistical-analysis) `data/skills/statistical-analysis` | Apache-2.0 |
 | analyze-data-quality | 데이터 품질 심층 점검 | [openai/plugins](https://github.com/openai/plugins/tree/0722921d5542fc593105c27bd52630babd8b8c2a/plugins/data-analytics/skills/analyze-data-quality) `plugins/data-analytics/skills/analyze-data-quality` | Proprietary (plugin.json 기준) |

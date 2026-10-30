@@ -1,49 +1,60 @@
 ---
 name: analysis-checklist
-description: "Write a short pre-analysis checklist (goal and metric, data assumptions, analysis steps, pass criteria) before touching the data. Use at the start of any data analysis task or problem statement, before explore-data, so later steps and the final validation have explicit criteria to check against."
+description: "Before touching the data, break the problem into numbered requirements (R1, R2...), submission format, metric, constraints and assumptions, then write a step plan with output files and done criteria. Use at the start of any data analysis or modeling task, before explore-data, so later steps and the final validation have explicit criteria to check against."
 ---
 
 # Analysis Checklist
 
-문제를 받으면 데이터를 열기 **전에** 아래 네 항목을 체크리스트로 먼저 작성한다.
-이 문서가 이후 분석의 기준이 되고, 마지막 검증(validate-data, verification-before-completion)은 이 기준에 대해 수행한다.
+문제를 받으면 데이터를 열기 **전에** 두 파일을 쓴다. 이후 분석은 이 기준을 따르고, 마지막 검증(validate-data, verification-before-completion)은 이 기준에 대해 수행한다. 전체 절차는 저장소 루트의 `guide.md`를 따른다.
 
 ## 작성 규칙
 
-- 파일로 남긴다: 작업 폴더에 `CHECKLIST.md` (작업 이력이 평가 대상이므로 채팅에만 쓰지 않는다).
-- 짧게 쓴다: 항목당 1~5줄. 모르는 것은 추측하지 말고 `가정:` 또는 `확인 필요:`로 표시한다.
-- 문제 문장에 있는 요구사항(산출물, 지표, 형식, 제약)은 빠짐없이 옮긴다. 하나라도 빠지면 ④에서 실패다.
+- 채팅이 아니라 파일로 남긴다 (작업 이력이 평가 대상).
+- 짧게 쓴다. 모르는 것은 추측하지 말고 `A#` 가정으로 표시한다.
+- 문제 문장에 있는 요구사항은 빠짐없이 `R#`로 옮긴다. 하나라도 빠지면 검증에서 실패다.
+- 문제 유형에 맞지 않는 항목은 `해당 없음: <이유>`로 남긴다.
 
-## 템플릿
+## `docs/00_problem.md`
 
 ```markdown
-# CHECKLIST: <문제 한 줄 요약>
+# 문제: <한 줄 요약>
 
-## ① 목표와 평가 지표
-- 질문: <답해야 할 질문을 한 문장으로>
-- 산출물: <제출해야 하는 것: 수치, 표, 그래프, 파일, 형식>
-- 평가 지표: <정확도/RMSE/p-value/비율 등, 정의와 단위 포함>
+## 요구사항
+- R1: <요구사항 하나>
+- R2: ...
 
-## ② 데이터 가정
-- 파일·테이블: <경로, 행 단위(grain), 키>
-- 가정: <결측 처리, 기간, 단위, 시간대, 필터 등>
-- 확인 필요: <데이터를 열어 확인해야 할 가정>
+## 제출물 형식
+- <파일 이름·형식, 컬럼, 정밀도, 분량 등>
 
-## ③ 분석 단계
-- [ ] 1. 데이터 프로파일링 (explore-data)
-- [ ] 2. 품질 점검, 필요 시 (analyze-data-quality)
-- [ ] 3. <핵심 분석 단계: 전처리, 모델, 검정 등>
-- [ ] 4. 결과 검증 (validate-data)
+## 평가 지표
+- <지표 이름: 정의, 단위, 높을수록/낮을수록 좋음>
 
-## ④ 합격 기준
-- [ ] <요구사항 1이 산출물에 있다>
-- [ ] <핵심 수치를 독립적으로 재계산해 일치했다>
-- [ ] <형식/제약 조건을 지켰다>
-- [ ] 모든 결론에 실행 근거(코드·출력)가 있다
+## 제약
+- <시간, 허용 도구·라이브러리, 외부 데이터 사용 여부 등>
+
+## 가정
+- A1: <애매한 부분에 대한 가정> (확인 방법: <데이터에서 무엇을 보면 확인되는지>)
+```
+
+## `docs/01_plan.md`
+
+```markdown
+# 계획
+
+| 단계 | 할 일 | 만들 파일 | 완료 조건 | 충족 요구사항 |
+|---|---|---|---|---|
+| 1 | 데이터 파악 (explore-data, 필요 시 analyze-data-quality) | docs/02_data_profile.md | grain·키·결측·그룹 구조 기록됨 | — |
+| 2 | <전처리> | src/preprocess.py | <확인 가능한 조건> | R# |
+| 3 | <분석·모델> | src/analyze.py, outputs/... | <확인 가능한 조건> | R# |
+| 4 | 평가·기준선 비교 | src/evaluate.py, outputs/metrics.* | <기준선 대비 수치가 파일에 있음> | R# |
+| 5 | 검증 (validate-data) | docs/04_validation.md | 모든 R#가 결과물에 대응됨 | 전체 |
+
+## 점검
+- [ ] 모든 R#가 어느 단계에 배정됐다
+- [ ] 각 완료 조건이 파일이나 출력으로 확인 가능하다
 ```
 
 ## 진행 중 갱신
 
-- 데이터를 연 뒤 ②의 `확인 필요` 항목을 확인 결과로 바꾼다. 가정이 틀렸으면 ③을 고친다.
-- ③의 단계를 끝낼 때마다 체크한다.
-- 마지막에 ④의 각 항목을 실제 출력과 대조해 체크한다. 체크하지 못한 항목은 최종 답변에 명시한다.
+- 사람이 함께 작업 중이면 `01_plan.md`를 보여주고 승인을 받은 뒤 진행한다.
+- 데이터를 연 뒤 `A#` 가정을 확인 결과로 갱신한다. 가정이 틀려 계획이 바뀌면 `01_plan.md`를 고치고 `03_analysis_log.md`에 이유를 남긴다.
