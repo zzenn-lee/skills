@@ -1,16 +1,38 @@
 # AGENTS.md
 
-데이터 분석 문제는 [guide.md](guide.md)의 절차와 파일 구조(`docs/00~04`, `src/`, `outputs/`)를 따르고, 아래 순서로 스킬을 사용한다. 단계를 건너뛰지 않는다.
+작업 절차와 파일 구조(`docs/00~05`, `src/`, `outputs/`)는 [guide.md](guide.md)를 따른다. 과제에 원래 있던 README·AGENTS.md·지시가 이 문서보다 우선하며, 그 파일들은 덮어쓰지 않는다.
 
-1. **analysis-checklist** — 데이터를 열기 전에 `docs/00_problem.md`(요구사항 R#, 제출물 형식, 지표, 제약, 가정 A#)와 `docs/01_plan.md`(단계·생성 파일·완료 조건)를 작성한다.
-2. **explore-data** — 데이터를 처음 열 때 행·열 수, grain, 결측률, 카디널리티, 분포, 그룹 구조를 프로파일링해 `docs/02_data_profile.md`에 남긴다.
-3. **analyze-data-quality** — 프로파일링에서 중복, 결측 급증, 이상값, 조인 손실 같은 신호가 보이거나 문제가 데이터 신뢰성을 묻는 경우에만 실행한다.
-4. **statistical-analysis** — 기술통계, 이상치, 가설검정(t-검정, 카이제곱, ANOVA 등)이 필요할 때 사용한다. 효과 크기와 신뢰구간을 함께 보고한다.
-5. **validate-data** — 결과를 내기 전에 핵심 수치를 재계산하고 누수·기준선·함정(조인 중복, 분모 오류, 심슨의 역설 등)을 점검한 뒤 `Ready to share / Share with caveats / Needs revision`으로 판정해 `docs/04_validation.md`에 남긴다.
-6. **verification-before-completion** — 완료를 선언하기 직전에 실행한다. 이번 작업에서 실제로 실행한 코드와 출력 없이 "완료", "정답"이라고 말하지 않는다. 처음부터 다시 실행해 재현되는지, `docs/00_problem.md`의 R#가 모두 충족됐는지 하나씩 대조한다.
+## 금지
 
-## 공통 규칙
+- git push, 과제 파일·데이터·결과의 외부 전송, 다른 AI 모델·외부 API·개인 키 사용.
+- Codex·도구 업데이트, 플랫폼 설정 변경, 전역 설치, Computer Use·UI 자동화.
+- 이미 설치된 Python 버전과 패키지를 먼저 확인하고 그 안에서 해결한다.
+
+## 과제 유형부터 판정
+
+`docs/00_problem.md`에 유형을 적는다: **데이터 분석 / 시제품(앱·도구) / 혼합**.
+
+- **데이터 분석**: 아래 스킬 순서를 따른다.
+- **시제품**: docs/00~01은 똑같이 쓴다. 가장 작은 end-to-end 흐름을 먼저 동작시키고 기능을 하나씩 붙인다. R# 하나에 확인 방법(테스트나 실행 명령) 하나를 둔다. 계산·판정은 결정적인 코드로 하고 LLM은 문장 생성에만 쓴다. 서버는 `0.0.0.0`에 띄우고, 화면 확인은 사용자에게 플랫폼 미리보기로 요청한다. 데이터가 있으면 데이터 스킬을 그 부분에만 쓴다.
+
+## 데이터 분석 스킬 순서
+
+현재 단계에 필요한 스킬만 읽는다. 목록에 스킬이 보이지 않으면 `.agents/skills/<이름>/SKILL.md`를 직접 읽는다.
+
+1. **analysis-checklist** — 데이터를 열기 전에 `docs/00_problem.md`, `docs/01_plan.md`, `docs/03_analysis_log.md` 뼈대를 만든다.
+2. **explore-data** — 행·열 수, grain, 키, 결측률, 카디널리티, 분포, 그룹 구조를 `docs/02_data_profile.md`에 남긴다.
+3. **semiconductor-data** — lot·wafer·die·수율·bin·공정 데이터가 나오면 읽는다.
+4. **data-validation A** — 중복, 결측 급증, 이상값, 조인 손실 신호가 있거나 문제가 데이터 신뢰성을 물을 때만.
+5. **statistical-analysis** — 기술통계, 이상치, 가설검정이 필요할 때. 효과 크기와 신뢰구간을 함께 보고한다.
+6. **data-validation B** — 결과를 내기 전에 핵심 수치 재계산, 누수·기준선·함정 점검, 판정을 `docs/04_validation.md`에 남긴다.
+7. **verification-before-completion** — 완료 선언 직전. 이번 작업에서 실행한 코드와 출력 없이 "완료", "정답"이라고 말하지 않는다.
+
+## 작업 습관
 
 - 모든 수치는 실제로 실행한 코드의 출력에서 가져온다. 추정값은 추정이라고 표시한다.
-- 일부 스킬 본문에 이 저장소에 없는 스킬(`$jupyter-notebooks`, `$visualize-data`, `$build-report`, `$design-kpis`, `$product-business-analysis`)이나 커넥터 플레이스홀더(`~~structured_data`, `~~operations_logs`, `CONNECTORS.md`)가 나온다. 없는 것은 무시하고, 로컬 파일과 Python/SQL로 같은 점검을 수행한다.
-- 스킬 산출물이 보고서 형식을 요구해도, 문제가 요구한 산출물 형식이 우선한다.
+- 토큰 절약: 원본 데이터를 통째로 출력하지 않는다(`head`, `describe`, 집계만). 테스트는 `-q`, 로그는 끝 20줄만, 코드 찾기는 `rg`. 보고는 바뀐 파일과 3줄 요약으로 한다.
+- 커밋은 로컬에서 작게, 검증된 단위로 한다: `무엇 — 왜 · 확인: <명령 또는 수치>`. push는 하지 않는다.
+- 시간: 남은 시간은 볼 수 없으므로 단계가 바뀔 때 사용자에게 묻는다. 시간 배분은 guide.md를 따른다.
+- 새 세션에서 이어받을 때는 `docs/00` → `docs/01` → `docs/03`의 "현재 상태" → `git log --oneline -10` 순서로 읽고 시작한다.
+- 사용자가 서술형 단계가 시작됐다고 하면 그때부터 어떤 도움도 하지 않는다.
+- explore-data 본문의 `CONNECTORS.md`와 데이터 웨어하우스 연결은 무시하고 로컬 파일과 Python/SQL로 같은 점검을 한다. 스킬이 요구하는 보고서 형식보다 문제가 요구한 형식이 우선한다.
