@@ -85,6 +85,6 @@ description: "Before touching the data or code, break the problem into numbered 
 
 ## 진행 중 갱신
 
-- 사람이 함께 작업 중이면 `01_plan.md`를 보여주고 승인을 받은 뒤 진행한다.
+- 세 파일을 쓰면 R# 목록, 담당자 질문 후보, 계획 요약을 보고하고 멈춘다. 사용자가 승인하기 전에는 데이터 분석이나 구현을 시작하지 않는다.
 - 담당자 답을 받으면 `Q#`의 답 칸과 관련 `R#`·`A#`의 상태를 고친다.
 - 계획이 바뀌면 `01_plan.md`를 고치고 `03_analysis_log.md`의 결정 표에 이유를 남긴다.
