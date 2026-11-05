@@ -1,0 +1,6 @@
+interface:
+  display_name: "Learning Opportunities"
+  short_description: "Practice exercises to understand AI-assisted work"
+  default_prompt: "Run a short learning exercise on the work we just did."
+policy:
+  allow_implicit_invocation: false

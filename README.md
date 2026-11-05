@@ -26,7 +26,10 @@ cp -n /tmp/kit/guide.md .
 | data-validation | 데이터 품질 점검(A)·결과 검증과 판정(B) | 이 저장소 (직접 작성) | — |
 | verification-before-completion | 실행 근거 없는 완료 선언 방지 | [obra/superpowers](https://github.com/obra/superpowers/tree/2ce8aa15d05bd57213e6f746f953aafb7ded7a8b/skills/verification-before-completion) `skills/verification-before-completion` | MIT (폴더에 LICENSE) |
 
-외부 스킬은 위 커밋 기준으로 원문 그대로 복사했다 (2026-10-30). 직접 작성한 부분의 아이디어 일부는 같은 해커톤용으로 공개된 다른 키트들을 참고했고, 문구는 새로 썼다.
+| explain-change | 변경·분석 설명과 대화형 서술형 퀴즈 | 이 저장소 (직접 작성). 구성은 [geoffreylitt의 explain-diff](https://gist.github.com/geoffreylitt/a29df1b5f9865506e8952488eac3d524)에서 착안 | — |
+| learning-opportunities | 이해를 다지는 연습 (예측, 따라가기, 설명해 보기) | [DrCatHicks/learning-opportunities](https://github.com/DrCatHicks/learning-opportunities/tree/3862d2eb6e93427f1f163a54360d11ef943b88b7/learning-opportunities/skills/learning-opportunities), 저자 Cat Hicks | CC-BY-4.0 (폴더에 LICENSE) |
+
+외부 스킬은 위 커밋 기준으로 `SKILL.md` 원문을 그대로 복사했다 (learning-opportunities는 2026-11-05, 나머지는 2026-10-30). learning-opportunities에는 호출 설정 파일 `agents/openai.yaml`만 추가했고 본문은 수정하지 않았다. 직접 작성한 부분의 아이디어 일부는 같은 해커톤용으로 공개된 다른 키트들을 참고했고, 문구는 새로 썼다.
 
 ## 사람이 할 일
 
@@ -41,6 +44,14 @@ cp -n /tmp/kit/guide.md .
 | ⑤ 추가 작업 | `<R#>을 해줘. 끝나면 테스트 결과와 바뀐 수치를 보여줘.` | 다음 R# 순서, 140분이면 중단 |
 | ⑥ 검증 | `data-validation B와 verification-before-completion으로 docs/04_validation.md를 써줘. 처음부터 다시 실행해서 재현도 확인해줘.` | 막는 문제 수정 여부, 제출 여부 |
 | ⑦ 정리 | `docs/05_summary.md를 써줘 (과제가 지정한 제출 파일이 있으면 그 형식으로). 커밋해줘.` | 약점 3개를 내 말로 확인 |
+
+이해가 안 되는 결과가 나오면 언제든 끼워 넣는다. 토큰이 드니 핵심 결과에만 쓴다.
+
+| 언제 | 붙여 넣을 지시 |
+|---|---|
+| 결과를 내 말로 설명하기 어려울 때 | `explain-change로 이번 변경을 설명해줘. 다 읽으면 퀴즈 내줘.` |
+| 더 깊게 보고 싶을 때 (여유 시간) | `explain-change로 설명해줘. HTML 페이지로도 만들어줘.` |
+| 연습이 필요할 때 | `learning-opportunities로 <주제> 연습 하나 해줘.` |
 
 결정할 때는 `A로 하자. 이유는 ~` 처럼 이유를 같이 말한다. 그 말이 결정 표에 그대로 남아 서술형 답변의 재료가 된다.
 
@@ -70,4 +81,5 @@ cp -n /tmp/kit/guide.md .
 ## 라이선스 참고
 
 - 처음에는 `openai/plugins` data-analytics 플러그인의 `analyze-data-quality`, `validate-data`를 넣었다가 뺐다. `plugin.json`에 `"license": "Proprietary"`로 표기되어 있고 LICENSE 파일이 없어 공개 재배포 허락이 확인되지 않기 때문이다. 대신 같은 역할을 하는 `data-validation`을 직접 썼다. 이전 커밋 기록에는 원본 사본이 남아 있다.
-- 포함하지 않은 후보: `create-data-context`(openai, 같은 라이선스 문제), `writing-plans`(superpowers, analysis-checklist가 대신함).
+- geoffreylitt의 explain-diff gist에는 라이선스가 없어(gist 댓글의 허락 문의에도 답이 없다) 복사하지 않았다. `explain-change`는 구성만 참고해 새로 썼고, 객관식 퀴즈의 정답이 가장 길거나 위치가 뻔하다는 gist 댓글들의 지적에 따라 대화형 서술 퀴즈로 바꿨다.
+- 포함하지 않은 후보: `create-data-context`(openai, 같은 라이선스 문제), `writing-plans`(superpowers, analysis-checklist가 대신함), [guilyx/grip](https://github.com/guilyx/grip)(별도 CLI 설치 필요), [Understand-Anything](https://github.com/Lum1104/Understand-Anything)(먼저 지식 그래프를 만들어야 하고 그 스킬만 약 60KB), [malav2110/explain-diff-html](https://github.com/malav2110/explain-diff-html)(SKILL.md 36KB에 Node 검증기 포함), [Chris-Graffagnino/explain-diff](https://github.com/Chris-Graffagnino/explain-diff)(explain-change와 역할이 겹침. 위험 점검 아이디어만 참고).

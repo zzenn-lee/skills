@@ -1,0 +1,6 @@
+interface:
+  display_name: "Explain Change"
+  short_description: "Explain a change or analysis, then quiz the user in chat"
+  default_prompt: "Explain the current change and then quiz me on it one question at a time."
+policy:
+  allow_implicit_invocation: false
